@@ -18,3 +18,4 @@ jobs:
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_BENDA_DND }}'
           channelId: live
           projectId: benda-dnd
+          entrypoint: 'frontend'
