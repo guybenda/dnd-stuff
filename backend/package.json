@@ -1,0 +1,19 @@
+{
+  "name": "guybenda-dnd-backend",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "bun-types": "latest",
+    "@typescript-eslint/eslint-plugin": "^5.12.0",
+    "@typescript-eslint/parser": "^5.12.0",
+    "eslint": "^8.9.0",
+    "typescript": "^5.1.6"
+  },
+  "scripts": {
+    "dev": "bun i && bun run --watch src/index.ts"
+  },
+  "dependencies": {
+    "common": "link:common",
+    "firebase-admin": "^11.11.0"
+  }
+}
