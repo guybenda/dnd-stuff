@@ -1,19 +1,20 @@
-# name: Deploy backend to DigitalOcean
-# on: 
-#   pull_request:
-#   push:
-#     branches:
-#       - main
-# jobs:
-#   build_and_preview:
-#     if: '${{ (github.event_name == "push" && github.event.ref == "refs/heads/main") || github.event.pull_request.head.repo.full_name == github.repository }}'
-#     runs-on: ubuntu-latest
-#     steps:
-#       - uses: actions/checkout@v3
-#       - run: cd frontend && npm ci && npm run build
-#       - uses: FirebaseExtended/action-hosting-deploy@v0
-#         with:
-#           repoToken: '${{ secrets.GITHUB_TOKEN }}'
-#           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_BENDA_DND }}'
-#           projectId: benda-dnd
-#           entrypoint: 'frontend'
+name: Build backend and save artifact
+on: 
+  pull_request:
+  push:
+    branches:
+      - main
+jobs:
+  build_and_preview:
+    if: '${{ (github.event_name == "push" && github.event.ref == "refs/heads/main") || github.event.pull_request.head.repo.full_name == github.repository }}'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: cd backend && npm ci && npm run build
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: backend
+          path: |
+            backend/build
+      
