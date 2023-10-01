@@ -174,4 +174,5 @@ dist
 # Finder (MacOS) folder config
 .DS_Store
 
-key.json
+key.js
+build
