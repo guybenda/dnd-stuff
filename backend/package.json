@@ -4,6 +4,7 @@
 	"version": "1.0.0",
 	"dependencies": {
 		"common": "https://gitpkg.now.sh/guybenda/dnd-stuff/common?main",
+		"express": "^4.18.2",
 		"firebase-admin": "^11.11.0"
 	},
 	"devDependencies": {

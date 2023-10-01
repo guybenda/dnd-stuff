@@ -1,4 +1,4 @@
-name: Build backend and save artifact
+name: Build backend deploy on server
 on: 
   pull_request:
   push:
@@ -9,12 +9,13 @@ jobs:
     if: ${{ (github.event_name == 'push' && github.event.ref == 'refs/heads/main') || github.event.pull_request.head.repo.full_name == github.repository }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - run: cd backend && npm ci && npm run build
-      - name: Upload build artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: backend
-          path: |
-            backend/build
+    - name: Setup SSH key
+      run: |
+        install -m 600 -D /dev/null ~/.ssh/id_rsa
+        echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_rsa
+        ssh-keyscan -H ${{ secrets.SSH_HOST }} > ~/.ssh/known_hosts
+    - name: Pull repo on server
+      run: ssh ${{ secrets.SSH_HOST }} "cd ${{ secrets.WORK_DIR }} && git checkout main && git pull && npm ci && npm run build && systemctl restart dnd && exit"
+    - name: Cleanup
+      run: rm -rf ~/.ssh
       
